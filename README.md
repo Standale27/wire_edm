@@ -25,6 +25,6 @@ The script will do a few things in order:
 
 >Write the final file while discarding all unnecessary Gcodes
 
->AND ensure that the initial rapid move (G0) is still present, as well as maintaining one incremental positioning command (G91) at the start of the script with no repeats
+>Ensure that the initial rapid move (G0) is still present, as well as maintaining one incremental positioning command (G91) at the start of the script with no repeats
 
 Will add a few more features, maybe potentially to have this act as a post-processing script for Fusion so that it is automatically applied. Would love a script that can just convert a DXF to gcode too.
