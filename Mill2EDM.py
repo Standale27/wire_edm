@@ -1,11 +1,25 @@
 from pygcode import Line
+import argparse
+
+parser = argparse.ArgumentParser(description="Indicate filenames for input and output files")
+parser.add_argument("--infile", type=str, default=None, help="Specify an input file path")
+parser.add_argument("--outfile", type=str, default=None, help="Specify an output file path")
+
+args = parser.parse_args()
 
 allowedCodes = ['O0027', 'G01', 'G02', 'G03', 'G40', 'G41', 'G42', 'M30', 'M31'] #EDM Specific Codes
 
 class codeConverter():
-    def __init__(self, filename, outputfile):   # Initializes class taking in an input and output file name. Appends the rows to self.lines
-        self.ifn = filename     # input file name
-        self.ofn = outputfile   # output file name
+    def __init__(self):   # Initializes class taking in an input and output file name. Appends the rows to self.lines
+        if args.infile:
+            self.ifn = args.infile     # input file name
+        else:
+            self.ifn = input("Please enter the input file path: ")
+        if args.outfile:
+            self.ofn = args.outfile   # output file name
+        else:
+            self.ofn = input("Please enter the output file path: ")
+        
         
     def __enter__(self):
         self.infile = open(self.ifn, 'r')
@@ -68,7 +82,7 @@ class codeConverter():
                 write_line(all, comment)
 
 if __name__ == '__main__':
-    c = codeConverter('0027_new.nc', '0027_new.txt.nc')
+    c = codeConverter()
 
     with c as lines:
         for n, row in enumerate(lines):     # Iterate through all rows
@@ -80,7 +94,8 @@ if __name__ == '__main__':
             processedLine = Line(lines[n])
 
             processedLine.block.gcodes = c.coderemoval(processedLine, 'Z')  # Removes all Z moves
-            if '%' in processedLine._text:      # Start/End % processing
+            if '%' in processedLine._text:      # Start/End '%' character processing
                 c.writetofile(str(processedLine)+'\n')
             
             c.writewithcomments(processedLine.block.gcodes, processedLine)
+    print("Done!")
