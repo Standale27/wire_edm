@@ -1,11 +1,11 @@
 # Mill-to-EDM Converter
 Autodesk Fusion makes it difficult to write Wire EDM specific NC code, but I can approximate it with a Mill machine and a very thin cutting tool. This script takes the Fusion output and makes it EDM compatible for our FANUC EDM using incremental positioning.
 
-Install the python package pygcode, available here: https://github.com/fragmuffin/pygcode
+## Install the python package pygcode, available here: https://github.com/fragmuffin/pygcode
 
 The included files in the modified_package folder are modified package files, replace the ones in your package directory with these. The changes I made were adding in an M31 code and increasing the precision of how some of the values were being converted.
 
-The script will do a few things in order:
+## The script will do a few things in order:
 
 >Iterate through all rows of the input .nc file
 
